@@ -1,4 +1,4 @@
-package com.leondev.movie_app.ui.theme
+package com.leondev.movie_app.util.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
