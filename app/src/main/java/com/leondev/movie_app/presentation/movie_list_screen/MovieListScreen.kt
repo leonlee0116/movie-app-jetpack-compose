@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.leondev.movie_app.presentation.movie_list_screen.component.MovieCard
+import com.leondev.movie_app.presentation.movie_list_screen.component.MovieCardSmall
 import com.leondev.movie_app.presentation.movie_list_screen.state.MovieListUIEvent
 import com.leondev.movie_app.presentation.movie_list_screen.state.MovieListUIState
 
@@ -60,14 +61,12 @@ fun MovieListScreen(
                     )
                     Spacer(modifier = Modifier.height(10.dp))
                     LazyRow(
-                        modifier = Modifier.height(150.dp),
                         horizontalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
                         items(movieListUIState.topRatedMovieList.size) { index ->
-                            MovieCard(
+                            MovieCardSmall(
                                 movieListUIState.topRatedMovieList[index],
                                 navHostController,
-                                -1
                             )
                         }
                     }

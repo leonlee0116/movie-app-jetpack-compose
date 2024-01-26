@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -24,7 +23,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -43,10 +41,9 @@ import com.leondev.movie_app.util.getAverageColor
 import com.leondev.movie_app.util.route.Screen
 
 @Composable
-fun MovieCard(
+fun MovieCardSmall(
     movie: Movie,
     navHostController: NavHostController,
-    index: Int = 0
 ) {
     // build movie image
     val imageState = rememberAsyncImagePainter(
@@ -63,17 +60,8 @@ fun MovieCard(
 
     Column(
         modifier = Modifier
-            .width(200.dp)
-            .padding(
-                start = if (index == -1) 0.dp else if (index % 2 == 0) 10.dp else 0.dp,
-                end = if (index == -1) 0.dp else if (index % 2 != 0) 10.dp else 0.dp
-            )
+            .width(250.dp)
             .clip(RoundedCornerShape(10.dp))
-            .background(
-                Brush.verticalGradient(
-                    colors = listOf(MaterialTheme.colorScheme.secondaryContainer, dominantColor)
-                )
-            )
             .clickable {
                 navHostController.navigate(Screen.Detail.route + "/${movie.id}")
             }
@@ -82,7 +70,7 @@ fun MovieCard(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(250.dp)
+                .height(150.dp)
                 .clip(RoundedCornerShape(10.dp))
                 .background(MaterialTheme.colorScheme.primaryContainer)
         ) {
@@ -99,7 +87,7 @@ fun MovieCard(
                 Image(
                     painter = imageState.painter,
                     contentDescription = movie.title,
-                    contentScale = ContentScale.Crop,
+                    contentScale = ContentScale.FillWidth,
                     modifier = Modifier.fillMaxSize()
                 )
             }
@@ -111,8 +99,7 @@ fun MovieCard(
             text = movie.title,
             maxLines = 1,
             fontSize = 14.sp,
-            fontWeight = FontWeight.ExtraBold,
-            modifier = Modifier.padding(start = 10.dp, end = 10.dp)
+            fontWeight = FontWeight.ExtraBold
         )
         Spacer(
             modifier = Modifier.height(10.dp)

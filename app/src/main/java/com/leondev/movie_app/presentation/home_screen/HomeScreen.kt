@@ -18,6 +18,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
@@ -39,7 +40,7 @@ import com.leondev.movie_app.util.ui.theme.MovieAppTheme
 @Composable
 fun HomeScreen(navController: NavHostController) {
     val movieListViewModel = hiltViewModel<MovieViewModel>()
-    val movieListUIState = movieListViewModel.movieListState.collectAsState().value
+    val movieListUIState by movieListViewModel.movieListState.collectAsState()
     val bottomNavigationBarController = rememberNavController()
 
 
