@@ -83,7 +83,7 @@ class MovieViewModel @Inject constructor(
                             resource.data?.let { result ->
                                 _movieListState.update {
                                     it.copy(
-                                        topRatedMovieList = it.topRatedMovieList + result,
+                                        topRatedMovieList = it.topRatedMovieList + result.shuffled(),
                                         topRatedMovieListPage = it.topRatedMovieListPage + 1,
                                         isLoading = false
                                     )
@@ -119,7 +119,7 @@ class MovieViewModel @Inject constructor(
                             it.data?.let { result ->
                                 _movieListState.update {
                                     it.copy(
-                                        popularMovieList = it.popularMovieList + result,
+                                        popularMovieList = it.popularMovieList + result.shuffled(),
                                         popularMovieListPage = it.popularMovieListPage + 1
                                     )
                                 }
