@@ -50,6 +50,7 @@ fun MovieCardSmall(
         model = ImageRequest.Builder(LocalContext.current)
             .data(MovieApi.IMAGE_BASE_URL + MovieApi.IMAGE_W500 + movie.poster_path)
             .size(Size.ORIGINAL)
+            .crossfade(true)
             .build()
     ).state
 
