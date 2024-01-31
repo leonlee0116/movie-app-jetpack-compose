@@ -1,21 +1,15 @@
 package com.leondev.movie_app.movie_video.presentation
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
 import com.leondev.movie_app.movie_video.domain.model.MovieVideoResults
@@ -31,37 +25,25 @@ fun MovieVideoScreen(navController: NavHostController, movieVideoResult: List<Mo
         return
     }
 
-    val videoList = remember {
+    val trailerVideo = remember {
         movieVideoResult.filter {
             it.site.toLowerCase(Locale("en")).contains("youtube")
+                    && it.type.toLowerCase().contains("trailer")
         }.map {
             it
         }.toList()
     }
-    var currentVideoId = remember {
-        videoList.first().key
+    val currentVideoId = remember {
+        trailerVideo.first().key
     }
 
     Column(
+        verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
     ) {
         YoutubeScreen(currentVideoId)
-        LazyColumn {
-            items(videoList.size) {
-                Row(
-                    Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            currentVideoId = videoList[it].key
-                        }
-                        .padding(20.dp)
-                ) {
-                    Text(text = videoList[it].name)
-                }
-            }
-        }
     }
 
 }

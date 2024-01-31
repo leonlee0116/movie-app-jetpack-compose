@@ -19,12 +19,12 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Refresh
+import androidx.compose.material.icons.rounded.PlayArrow
+import androidx.compose.material.icons.rounded.ZoomIn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,6 +40,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
@@ -82,7 +83,7 @@ fun MovieListScreen(
         }
         val posterImageState = rememberAsyncImagePainter(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(MovieListApi.IMAGE_BASE_URL + MovieListApi.IMAGE_ORIGINAL + randomMovie.backdrop_path)
+                .data(MovieListApi.IMAGE_BASE_URL + MovieListApi.IMAGE_ORIGINAL + randomMovie.poster_path)
                 .size(Size.ORIGINAL)
                 .crossfade(true)
                 .build()
@@ -154,8 +155,9 @@ fun MovieListScreen(
 
                     Column(
                         modifier = Modifier
-                            .align(Alignment.BottomStart)
                             .padding(horizontal = 14.dp, vertical = 20.dp)
+                            .align(Alignment.BottomCenter),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Row {
                             Text(
@@ -185,7 +187,8 @@ fun MovieListScreen(
                         Text(
                             text = randomMovie.title,
                             fontSize = 40.sp,
-                            lineHeight = 1.1.em
+                            lineHeight = 1.1.em,
+                            textAlign = TextAlign.Center
                         )
                         Spacer(Modifier.height(6.dp))
                         Row {
@@ -197,31 +200,55 @@ fun MovieListScreen(
                                     containerColor = Color.White.copy(alpha = 0.1f)
                                 )
                             ) {
-                                Text(
-                                    text = "Trailer",
-                                    color = Color.White
-                                )
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Rounded.PlayArrow,
+                                        contentDescription = "",
+                                        tint = Color.White,
+                                        modifier = Modifier.size(18.dp)
+                                    )
+                                    Spacer(modifier = Modifier.width(6.dp))
+                                    Text(
+                                        text = "Trailer",
+                                        color = Color.White
+                                    )
+                                }
                             }
                             Spacer(Modifier.width(10.dp))
                             Button(
-                                onClick = { /*TODO*/ },
+                                onClick = {
+                                    navHostController.navigate(Screen.Detail.route + "/${randomMovie.id}")
+
+                                },
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = Color.White.copy(alpha = 0.1f)
                                 )
                             ) {
-                                Text(
-                                    text = "Details",
-                                    color = Color.White
-                                )
-                            }
-                            Spacer(modifier = Modifier.weight(1f))
-                            IconButton(
-                                onClick = {
-                                    randomMovie = movieListUIState.popularMovieList.random()
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Rounded.ZoomIn,
+                                        contentDescription = "",
+                                        tint = Color.White,
+                                        modifier = Modifier.size(18.dp)
+                                    )
+                                    Spacer(modifier = Modifier.width(6.dp))
+                                    Text(
+                                        text = "Details",
+                                        color = Color.White
+                                    )
                                 }
-                            ) {
-                                Icon(imageVector = Icons.Rounded.Refresh, contentDescription = null)
                             }
+//                            IconButton(
+//                                onClick = {
+//                                    randomMovie = movieListUIState.popularMovieList.random()
+//                                }
+//                            ) {
+//                                Icon(imageVector = Icons.Rounded.Refresh, contentDescription = null)
+//                            }
                         }
                     }
                 }
