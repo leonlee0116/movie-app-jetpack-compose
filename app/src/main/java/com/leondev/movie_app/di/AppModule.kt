@@ -2,8 +2,10 @@ package com.leondev.movie_app.di
 
 import android.app.Application
 import androidx.room.Room
-import com.leondev.movie_app.data.local.MovieDatabase
-import com.leondev.movie_app.data.remote.MovieApi
+import com.leondev.movie_app.movie_detail.data.remote.MovieDetailApi
+import com.leondev.movie_app.movie_list.data.local.MovieDatabase
+import com.leondev.movie_app.movie_list.data.remote.MovieListApi
+import com.leondev.movie_app.movie_video.data.remote.MovieVideoApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,13 +27,35 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(): MovieApi {
+    fun provideMovieListApi(): MovieListApi {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(MovieApi.BASE_URL)
+            .baseUrl(MovieListApi.BASE_URL)
             .client(client)
             .build()
-            .create(MovieApi::class.java)
+            .create(MovieListApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideMovieVideoApi(): MovieVideoApi {
+        return Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(MovieListApi.BASE_URL)
+            .client(client)
+            .build()
+            .create(MovieVideoApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideMovieDetailApi(): MovieDetailApi {
+        return Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(MovieListApi.BASE_URL)
+            .client(client)
+            .build()
+            .create(MovieDetailApi::class.java)
     }
 
     @Singleton

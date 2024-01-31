@@ -11,6 +11,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -18,9 +20,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.leondev.movie_app.presentation.home_screen.HomeScreen
-import com.leondev.movie_app.presentation.movie_detail_screen.MovieDetailScreen
-import com.leondev.movie_app.presentation.viewmodel.MovieDetailViewModel
+import com.leondev.movie_app.movie_detail.presentation.MovieDetailScreen
+import com.leondev.movie_app.movie_detail.presentation.viewmodel.MovieDetailViewModel
+import com.leondev.movie_app.movie_list.presentation.home_screen.HomeScreen
+import com.leondev.movie_app.movie_video.presentation.MovieVideoScreen
+import com.leondev.movie_app.movie_video.presentation.viewmodel.MovieVideoViewModel
 import com.leondev.movie_app.util.route.Screen
 import com.leondev.movie_app.util.ui.theme.MovieAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,6 +33,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             MovieAppTheme {
                 setStatusBarColor()
@@ -57,6 +63,19 @@ class MainActivity : ComponentActivity() {
                             val movieDetailUIState by movieDetailListViewModel.movieDetailUIState.collectAsState()
                             MovieDetailScreen(navController, movieDetailUIState)
                         }
+
+                        composable(
+                            Screen.Video.route + "/{movieId}",
+                            arguments = listOf(
+                                navArgument("movieId") {
+                                    type = NavType.IntType
+                                }
+                            )
+                        ) {
+                            val movieVideoViewModel = hiltViewModel<MovieVideoViewModel>()
+                            val movieVideoResult by movieVideoViewModel.movieVideoResult.collectAsState()
+                            MovieVideoScreen(navController, movieVideoResult)
+                        }
                     }
                 }
             }
@@ -67,8 +86,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun setStatusBarColor() {
     val systemUIController = rememberSystemUiController()
-    val color = MaterialTheme.colorScheme.inverseOnSurface
-    LaunchedEffect(key1 = color) {
+    val color = Color.Transparent
+    LaunchedEffect(color) {
         systemUIController.setStatusBarColor(color)
     }
 }
