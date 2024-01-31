@@ -59,7 +59,7 @@ import com.leondev.movie_app.util.route.Screen
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
 
-private const val MAIN_POSTER_HEIGHT = 350
+private const val MAIN_POSTER_HEIGHT = 400
 
 @Composable
 fun MovieListScreen(
@@ -83,7 +83,7 @@ fun MovieListScreen(
         }
         val posterImageState = rememberAsyncImagePainter(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(MovieListApi.IMAGE_BASE_URL + MovieListApi.IMAGE_ORIGINAL + randomMovie.poster_path)
+                .data(MovieListApi.IMAGE_BASE_URL + MovieListApi.IMAGE_ORIGINAL + randomMovie.backdrop_path)
                 .size(Size.ORIGINAL)
                 .crossfade(true)
                 .build()
@@ -146,7 +146,8 @@ fun MovieListScreen(
                             .background(
                                 Brush.verticalGradient(
                                     colors = listOf(
-                                        Color.Black.copy(alpha = 0.3f),
+                                        Color.Black,
+                                        Color.Black.copy(alpha = 0.1f),
                                         MaterialTheme.colorScheme.background
                                     ),
                                 )
@@ -155,7 +156,7 @@ fun MovieListScreen(
 
                     Column(
                         modifier = Modifier
-                            .padding(horizontal = 14.dp, vertical = 20.dp)
+                            .padding(horizontal = 14.dp, vertical = 10.dp)
                             .align(Alignment.BottomCenter),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
