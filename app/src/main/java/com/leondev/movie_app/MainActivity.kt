@@ -20,11 +20,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.leondev.movie_app.movie_detail.presentation.MovieDetailScreen
-import com.leondev.movie_app.movie_detail.presentation.viewmodel.MovieDetailViewModel
-import com.leondev.movie_app.movie_list.presentation.home_screen.HomeScreen
-import com.leondev.movie_app.movie_video.presentation.MovieVideoScreen
-import com.leondev.movie_app.movie_video.presentation.viewmodel.MovieVideoViewModel
+import com.leondev.movie_app.feature.home_screen.presentation.HomeScreen
+import com.leondev.movie_app.feature.movie_detail.presentation.MovieDetailScreen
+import com.leondev.movie_app.feature.movie_detail.presentation.viewmodel.MovieDetailViewModel
+import com.leondev.movie_app.feature.movie_video.presentation.MovieVideoScreen
+import com.leondev.movie_app.feature.movie_video.presentation.viewmodel.MovieVideoViewModel
 import com.leondev.movie_app.util.route.Screen
 import com.leondev.movie_app.util.ui.theme.MovieAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,6 +51,7 @@ class MainActivity : ComponentActivity() {
                         composable(Screen.Home.route) {
                             HomeScreen(navController)
                         }
+
                         composable(
                             Screen.Detail.route + "/{movieId}",
                             arguments = listOf(

@@ -2,10 +2,12 @@ package com.leondev.movie_app.di
 
 import android.app.Application
 import androidx.room.Room
-import com.leondev.movie_app.movie_detail.data.remote.MovieDetailApi
-import com.leondev.movie_app.movie_list.data.local.MovieDatabase
-import com.leondev.movie_app.movie_list.data.remote.MovieListApi
-import com.leondev.movie_app.movie_video.data.remote.MovieVideoApi
+import com.leondev.movie_app.feature.explore_screen.data.remote.ExploreApi
+import com.leondev.movie_app.feature.movie_detail.data.remote.MovieDetailApi
+import com.leondev.movie_app.feature.movie_list.data.local.MovieDatabase
+import com.leondev.movie_app.feature.movie_list.data.remote.MovieListApi
+import com.leondev.movie_app.feature.movie_video.data.remote.MovieVideoApi
+import com.leondev.movie_app.util.constant.BaseApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,7 +32,7 @@ class AppModule {
     fun provideMovieListApi(): MovieListApi {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(MovieListApi.BASE_URL)
+            .baseUrl(BaseApi.BASE_URL)
             .client(client)
             .build()
             .create(MovieListApi::class.java)
@@ -41,7 +43,7 @@ class AppModule {
     fun provideMovieVideoApi(): MovieVideoApi {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(MovieListApi.BASE_URL)
+            .baseUrl(BaseApi.BASE_URL)
             .client(client)
             .build()
             .create(MovieVideoApi::class.java)
@@ -52,10 +54,21 @@ class AppModule {
     fun provideMovieDetailApi(): MovieDetailApi {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(MovieListApi.BASE_URL)
+            .baseUrl(BaseApi.BASE_URL)
             .client(client)
             .build()
             .create(MovieDetailApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideExploreMovieApi(): ExploreApi {
+        return Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(BaseApi.BASE_URL)
+            .client(client)
+            .build()
+            .create(ExploreApi::class.java)
     }
 
     @Singleton
