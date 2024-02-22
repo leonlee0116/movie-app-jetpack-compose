@@ -49,7 +49,6 @@ import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
-import com.leondev.movie_app.feature.movie_list.data.remote.MovieListApi
 import com.leondev.movie_app.feature.movie_list.presentation.component.MovieCard
 import com.leondev.movie_app.feature.movie_list.presentation.component.MovieCardSmall
 import com.leondev.movie_app.feature.movie_list.presentation.viewmodel.MovieListUIEvent
@@ -79,19 +78,7 @@ fun MovieListScreen(
             )
         }
     } else {
-        var randomMovie by remember {
-            mutableStateOf(movieListUIState.popularMovieList.random())
-        }
-        val posterImageState = rememberAsyncImagePainter(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(BaseApi.IMAGE_BASE_URL + BaseApi.IMAGE_ORIGINAL + randomMovie.backdrop_path)
-                .size(Size.ORIGINAL)
-                .crossfade(true)
-                .build()
-        ).state
-        var showPoster by remember {
-            mutableStateOf(false)
-        }
+
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
@@ -107,6 +94,20 @@ fun MovieListScreen(
                 Box(
                     Modifier.fillMaxWidth()
                 ) {
+                    var randomMovie by remember {
+                        mutableStateOf(movieListUIState.popularMovieList.first())
+                    }
+                    val posterImageState = rememberAsyncImagePainter(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(BaseApi.IMAGE_BASE_URL + BaseApi.IMAGE_ORIGINAL + randomMovie.backdrop_path)
+                            .size(Size.ORIGINAL)
+                            .crossfade(true)
+                            .build()
+                    ).state
+                    var showPoster by remember {
+                        mutableStateOf(false)
+                    }
+                    
                     if (posterImageState is AsyncImagePainter.State.Loading) {
                         Box(
                             modifier = Modifier

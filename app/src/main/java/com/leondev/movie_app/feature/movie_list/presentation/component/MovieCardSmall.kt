@@ -71,7 +71,6 @@ fun MovieCardSmall(
     Column(
         modifier = Modifier
             .width(250.dp)
-            .clip(RoundedCornerShape(0.dp))
             .clickable {
                 navHostController.navigate(Screen.Detail.route + "/${movie.id}")
             }
@@ -80,6 +79,7 @@ fun MovieCardSmall(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
+                .clip(RoundedCornerShape(4.dp))
                 .height(150.dp)
                 .background(MaterialTheme.colorScheme.primaryContainer)
         ) {

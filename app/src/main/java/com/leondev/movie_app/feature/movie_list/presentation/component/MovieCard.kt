@@ -44,7 +44,6 @@ import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
-import com.leondev.movie_app.feature.movie_list.data.remote.MovieListApi
 import com.leondev.movie_app.feature.movie_list.domain.model.Movie
 import com.leondev.movie_app.util.constant.BaseApi
 import com.leondev.movie_app.util.getAverageColor
@@ -78,7 +77,7 @@ fun MovieCard(
                 start = if (index == -1) 0.dp else if (index % 2 == 0) 10.dp else 0.dp,
                 end = if (index == -1) 0.dp else if (index % 2 != 0) 10.dp else 0.dp
             )
-            .clip(RoundedCornerShape(0.dp))
+            .clip(RoundedCornerShape(4.dp))
             .background(
                 Brush.verticalGradient(
                     colors = listOf(MaterialTheme.colorScheme.secondaryContainer, dominantColor)
