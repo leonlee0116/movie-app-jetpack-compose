@@ -78,7 +78,7 @@ fun MovieCard(
                 start = if (index == -1) 0.dp else if (index % 2 == 0) 10.dp else 0.dp,
                 end = if (index == -1) 0.dp else if (index % 2 != 0) 10.dp else 0.dp
             )
-            .clip(RoundedCornerShape(10.dp))
+            .clip(RoundedCornerShape(0.dp))
             .background(
                 Brush.verticalGradient(
                     colors = listOf(MaterialTheme.colorScheme.secondaryContainer, dominantColor)
